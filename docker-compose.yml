@@ -1,0 +1,21 @@
+version: "3" ## especifica a versão do docker-compose file
+
+services: ## Define um serviço
+  tad:
+    image: postgres:latest
+    container_name: "postgres"
+    environment:
+      - POSTGRES_DB=bank
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+    volumes:
+      - "./data/postgres:/var/lib/docker/postgresql/data"
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+          cpus: '1.5'
+        reservations:
+          memory: 1024M
