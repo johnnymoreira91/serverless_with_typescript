@@ -1,10 +1,16 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import { Prisma, User } from '@prisma/client';
-import prisma from '@database/index'
+import { v4 as uuidv4 } from 'uuid';
 
-// import schema from './schema';
+interface User {
+  id: number;
+  uuid: string;
+  name: string;
+  email: string;
+  password: string;
+  permissionLevel: number
+}
 
 const createUser: ValidatedEventAPIGatewayProxyEvent<User> = async (event) => {
   const data = JSON.stringify(event.body);
@@ -12,36 +18,21 @@ const createUser: ValidatedEventAPIGatewayProxyEvent<User> = async (event) => {
   const {name, email, password, permissionLevel} = body
   console.log(body.name)
   try {
-    const users = await prisma.user.create({
-      data: {
-        name: name,
-        email: email,
-        password: password,
-        permissionLevel: permissionLevel || 0
-      }
-    })
+    const user = {
+      id: uuidv4(),
+      name,
+      email,
+      password,
+      permissionLevel
+    }
     return {
       statusCode: 201,
       body: JSON.stringify({
-        users
+        user
       }),
     };
-    // return formatJSONResponse({
-    //   statusCode: 200,
-    //   message: `Hello ${event.body.name}, your email is ${event.body.email}`
-    // });
   } catch (error) {
     console.log(error)
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // The .code property can be accessed in a type-safe manner
-      if (error.code === 'P2002') {
-        let message = 'There is a unique constraint violation, a new user cannot be created with this email'
-        return {
-          statusCode: 409,
-          body: JSON.stringify('There is a unique constraint violation, a new user cannot be created with this email')
-        }
-      }
-    }
     return formatJSONResponse({
       errorCode: error.code,
       error_on: error.meta.target

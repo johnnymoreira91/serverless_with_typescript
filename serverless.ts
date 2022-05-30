@@ -7,7 +7,7 @@ import userList from '@functions/user/list'
 const serverlessConfiguration: AWS = {
   service: 'teste-aws-ts',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dotenv-plugin'],
   useDotenv: true,
   provider: {
     name: 'aws',
@@ -35,7 +35,9 @@ const serverlessConfiguration: AWS = {
     userCreate,
     userList
    },
-  package: { individually: true },
+  package: { 
+    individually: true
+   },
   custom: {
     esbuild: {
       bundle: true,
