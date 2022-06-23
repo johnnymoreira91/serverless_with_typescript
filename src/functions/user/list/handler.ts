@@ -1,12 +1,13 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
+import listUsers from './function';
 
 // import schema from './schema';
 
 const listUser: ValidatedEventAPIGatewayProxyEvent<any> = async () => {
   try {
-    const users = 'muitos users'
+    const users = await listUsers()
     return {
       statusCode: 201,
       body: JSON.stringify({

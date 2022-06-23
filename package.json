@@ -17,6 +17,8 @@
   "dependencies": {
     "@middy/core": "^2.5.3",
     "@middy/http-json-body-parser": "^2.5.3",
+    "bluebird": "^3.7.2",
+    "mysql2": "^2.3.3",
     "serverless-dotenv-plugin": "^4.0.1",
     "uuid": "^8.3.2"
   },

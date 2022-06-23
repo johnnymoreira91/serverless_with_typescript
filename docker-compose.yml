@@ -1,17 +1,13 @@
-version: "3" ## especifica a versão do docker-compose file
+version: '3'
 
 services: ## Define um serviço
-  tad:
-    image: postgres:latest
-    container_name: "postgres"
-    environment:
-      - POSTGRES_DB=bank
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
-    volumes:
-      - "./data/postgres:/var/lib/docker/postgresql/data"
+  redis_cache:
+    image: redis
+    command: redis-server --requirepass Redis2022!
     ports:
-      - 5432:5432
+      - "6379:6379"
+    volumes: 
+      - cache:/data/redis
     deploy:
       resources:
         limits:
@@ -19,3 +15,24 @@ services: ## Define um serviço
           cpus: '1.5'
         reservations:
           memory: 1024M
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "ourBank2"
+    ports:
+      - "3306:3306"
+    volumes:
+      - cache:/data/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+          cpus: '1.5'
+        reservations:
+          memory: 1024M
+
+volumes:
+  cache:
+    driver: local

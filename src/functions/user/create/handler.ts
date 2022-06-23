@@ -1,30 +1,26 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import { v4 as uuidv4 } from 'uuid';
+import createNewUser, { CreateUserInterface } from './function'
 
-interface User {
-  id: number;
-  uuid: string;
-  name: string;
-  email: string;
-  password: string;
-  permissionLevel: number
-}
-
-const createUser: ValidatedEventAPIGatewayProxyEvent<User> = async (event) => {
+const createUser: ValidatedEventAPIGatewayProxyEvent<CreateUserInterface> = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
   const data = JSON.stringify(event.body);
-  const body = JSON.parse(data)
-  const {name, email, password, permissionLevel} = body
-  console.log(body.name)
+  const body: CreateUserInterface = JSON.parse(data)
+  const { name, email, password, permissionLevel, active, superUser, cpf, rg, sexo } = body
+  console.log(body)
   try {
-    const user = {
-      id: uuidv4(),
-      name,
-      email,
-      password,
-      permissionLevel
-    }
+    const user = await createNewUser({
+      name: name,
+      password: password,
+      email: email,
+      permissionLevel: permissionLevel,
+      active: active || true,
+      superUser: superUser || false,
+      cpf: cpf,
+      rg: rg,
+      sexo: sexo
+    })
     return {
       statusCode: 201,
       body: JSON.stringify({
