@@ -5,7 +5,8 @@ import listUsers from './function';
 
 // import schema from './schema';
 
-const listUser: ValidatedEventAPIGatewayProxyEvent<any> = async () => {
+const listUser: ValidatedEventAPIGatewayProxyEvent<any> = async (_event, context) => {
+  context.callbackWaitsForEmptyEventLoop= false
   try {
     const users = await listUsers()
     return {

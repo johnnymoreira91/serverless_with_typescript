@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "AWS_REGION=us-east-1 NODE_ENV=dev serverless offline start --noPrependStageInUrl",
-    "start": "nodemon --exec serverless offline --noPrependStageInUrl"
+    "dev": "nodemon --exec serverless offline --noPrependStageInUrl"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -19,6 +19,7 @@
     "@middy/http-json-body-parser": "^2.5.3",
     "bluebird": "^3.7.2",
     "mysql2": "^2.3.3",
+    "redis": "^4.1.0",
     "serverless-dotenv-plugin": "^4.0.1",
     "uuid": "^8.3.2"
   },

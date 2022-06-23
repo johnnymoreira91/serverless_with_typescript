@@ -8,7 +8,6 @@ const createUser: ValidatedEventAPIGatewayProxyEvent<CreateUserInterface> = asyn
   const data = JSON.stringify(event.body);
   const body: CreateUserInterface = JSON.parse(data)
   const { name, email, password, permissionLevel, active, superUser, cpf, rg, sexo } = body
-  console.log(body)
   try {
     const user = await createNewUser({
       name: name,
@@ -28,10 +27,9 @@ const createUser: ValidatedEventAPIGatewayProxyEvent<CreateUserInterface> = asyn
       }),
     };
   } catch (error) {
-    console.log(error)
+    console.log(error, 'errrroooooooooooo')
     return formatJSONResponse({
-      errorCode: error.code,
-      error_on: error.meta.target
+      error: error.sqlMessage
     });
   }
 };

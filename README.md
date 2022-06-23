@@ -1,21 +1,32 @@
 # Serverless - AWS Node.js Typescript
 
-This project has been generated using the `aws-nodejs-typescript` template from the [Serverless framework](https://www.serverless.com/).
+This project is a simple serverless CRUD
 
-For detailed instructions, please refer to the [documentation](https://www.serverless.com/framework/docs/providers/aws/).
+## What it use?
 
-## Installation/deployment instructions
+  - Serverless Framework
+  - Redis
+  - Mysql2 lib
+  - Typescript
+  - Docker-compose
 
-Depending on your preferred package manager, follow the instructions below to deploy your project.
+## FIRST
 
-> **Requirements**: NodeJS `lts/fermium (v.14.15.0)`. If you're using [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to ensure you're using the same Node version in local and in your lambda's runtime.
+run docker-compose up -d
 
-### Using NPM
+create the table
 
-- Run `npm i` to install the project dependencies
-- Run `npx sls deploy` to deploy this stack to AWS
-
-### Using Yarn
-
-- Run `yarn` to install the project dependencies
-- Run `yarn sls deploy` to deploy this stack to AWS
+CREATE TABLE users (
+  id INT NOT NULL AUTO_INCREMENT,
+  userId VARCHAR(100) NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  permissionLevel INT DEFAULT 0,
+  rg VARCHAR(30),
+  cpf VARCHAR(30),
+  sexo VARCHAR(30),
+  active TINYINT DEFAULT TRUE,
+  superUser TINYINT DEFAULT FALSE,
+  PRIMARY KEY (id)
+)

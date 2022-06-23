@@ -24,7 +24,7 @@
       "html"
     ]
   },
-  "window.zoomLevel": -1,
+  "window.zoomLevel": -1.5,
   "explorer.confirmDelete": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "git.enableSmartCommit": true,
@@ -39,6 +39,7 @@
   "npm.autoDetect": "off",
   "editor.fontLigatures": true,
   "vsicons.projectDetection.autoReload": true,
+  "files.autoSave": "off",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }

@@ -27,6 +27,9 @@ const serverlessConfiguration: AWS = {
       DB_PASSWORD: '${env:DB_PASSWORD}',
       DB_HOST: '${env:DB_HOST}',
       DB_PORT: '${env:DB_PORT}',
+      REDIS_PORT: '${env:REDIS_PORT}',
+      REDIS_HOST: '${env:REDIS_HOST}',
+      REDIS_PASSWORD: '${env:REDIS_PASSWORD}',
     },
   },
   // import the function via paths
